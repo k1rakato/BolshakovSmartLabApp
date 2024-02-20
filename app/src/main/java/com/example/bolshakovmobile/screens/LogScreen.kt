@@ -1,5 +1,7 @@
 package com.example.bolshakovmobile.screens
 
+
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,28 +18,50 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import java.nio.file.DirectoryNotEmptyException
+import com.example.bolshakovmobile.ValidMailLab.RegistrationFormEvent
+
+
+import com.example.bolshakovmobile.viewModel.ViewModelMain
+import kotlinx.coroutines.flow.collect
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 @Composable
-fun regScreen(navController: NavHostController) {
-    val email = remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .background(Color.White)
-        .padding(horizontal = 20.dp)
-        .fillMaxHeight()
+fun regScreen(navController: NavHostController, viewModel: ViewModelMain) {
+    val viewModel = viewModel<ViewModelMain>()
+    val state = viewModel.state
+    val context = LocalContext.current
+    LaunchedEffect(key1 = context){
+        viewModel.validationEvent.collect{event ->
+            when(event){
+                is ViewModelMain.ValidationEvent.Success -> {
+                    Toast.makeText(
+                        context,
+                        "Registration successful",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+            .fillMaxHeight()
     ) {
         Text(
             "🖐 Добро пожаловать!",
@@ -59,11 +84,18 @@ fun regScreen(navController: NavHostController) {
             color = Color(0xFF939396)
         )
         TextField(
-            value = email.value,
-            onValueChange = { newText -> email.value = newText },
+            value = state.email,
+            onValueChange = {
+                viewModel.onEvent(RegistrationFormEvent.EmailChanged(""))
+            },
+            isError = state.emailError != null,
             modifier = Modifier
                 .padding(top = 5.dp)
                 .fillMaxWidth(1f),
+
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email
+            ),
             maxLines = 1,
             singleLine = true,
             shape = RoundedCornerShape(13.dp),
@@ -72,20 +104,24 @@ fun regScreen(navController: NavHostController) {
                 focusedIndicatorColor = Color(0xFFF5F5F9),
                 unfocusedIndicatorColor = Color(0xFFF5F5F9),
                 cursorColor = Color.Black,
-                unfocusedPlaceholderColor = Color(0xFF939396)
-            ),
-            placeholder = { Text("example@mail.ru") }
+                unfocusedPlaceholderColor = Color(0xFF939396)),
+
+
         )
 
+
         Button(
-            onClick = {navController.navigate("EnterCodeScreen")},
+            onClick = {
+                navController.navigate("EnterCodeScreen")
+                viewModel.sendCodeEmail(email.value)},
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .padding(top = 40.dp)
                 .height(60.dp),
             enabled = email.value.isNotEmpty(),
             shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A6FEE),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF1A6FEE),
                 disabledContentColor = Color(0xFFC9D4FB)
             ),
         ) {
@@ -105,17 +141,19 @@ fun regScreen(navController: NavHostController) {
             fontSize = 15.sp,
             color = Color(0xFF939396)
         )
-        Button(onClick = { /*TODO*/ },
+        Button(
+            onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .fillMaxHeight()
                 .padding(bottom = 75.dp),
             shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFFFFF),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFFFFFFF),
                 disabledContentColor = Color(0xFFC9D4FB)
             ),
             border = BorderStroke(3.dp, Color.LightGray)
-        ){
+        ) {
             Text(
                 text = "Войти с Яндекс",
                 fontSize = 18.sp,
@@ -124,4 +162,5 @@ fun regScreen(navController: NavHostController) {
         }
     }
 }
+
 
