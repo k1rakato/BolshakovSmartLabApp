@@ -1,5 +1,6 @@
 package com.example.bolshakovmobile.screens
 
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,22 +22,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import java.nio.file.DirectoryNotEmptyException
+
+
+import com.example.bolshakovmobile.viewModel.ViewModelMain
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 @Composable
-fun regScreen(navController: NavHostController) {
+fun regScreen(navController: NavHostController, viewModel: ViewModelMain) {
     val email = remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .background(Color.White)
-        .padding(horizontal = 20.dp)
-        .fillMaxHeight()
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+            .fillMaxHeight()
     ) {
         Text(
             "🖐 Добро пожаловать!",
@@ -78,14 +82,17 @@ fun regScreen(navController: NavHostController) {
         )
 
         Button(
-            onClick = {navController.navigate("EnterCodeScreen")},
+            onClick = {
+                navController.navigate("EnterCodeScreen")
+                viewModel.sendCodeEmail(email.value)},
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .padding(top = 40.dp)
                 .height(60.dp),
             enabled = email.value.isNotEmpty(),
             shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A6FEE),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF1A6FEE),
                 disabledContentColor = Color(0xFFC9D4FB)
             ),
         ) {
@@ -105,17 +112,19 @@ fun regScreen(navController: NavHostController) {
             fontSize = 15.sp,
             color = Color(0xFF939396)
         )
-        Button(onClick = { /*TODO*/ },
+        Button(
+            onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .fillMaxHeight()
                 .padding(bottom = 75.dp),
             shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFFFFF),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFFFFFFF),
                 disabledContentColor = Color(0xFFC9D4FB)
             ),
             border = BorderStroke(3.dp, Color.LightGray)
-        ){
+        ) {
             Text(
                 text = "Войти с Яндекс",
                 fontSize = 18.sp,
@@ -124,4 +133,5 @@ fun regScreen(navController: NavHostController) {
         }
     }
 }
+
 

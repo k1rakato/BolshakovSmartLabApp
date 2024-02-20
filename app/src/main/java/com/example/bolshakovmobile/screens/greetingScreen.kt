@@ -32,7 +32,7 @@ fun SmartLab(navController: NavHostController) {
     if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
         LaunchedEffect(key1 = true) {
             delay(1500L)
-            navController.navigate("LogScreen") {
+            navController.navigate("firstDescriptionScreen") {
                 popUpTo("greetingScreen")
                 {
                     inclusive = true

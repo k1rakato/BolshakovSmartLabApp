@@ -2,6 +2,7 @@ package com.example.bolshakovmobile.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,14 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.bolshakovmobile.R
 
 
 @Preview
 @Composable
-fun InformationScreen1() {
+fun InformationScreen1(navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.White)) {
@@ -36,10 +40,19 @@ fun InformationScreen1() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
+                modifier = Modifier.padding(top = 25.dp, start = 20.dp)
+                    .clickable { navController.navigate("LogScreen")
+                {
+                    popUpTo("firstDescriptionScreen")
+                    {
+                        inclusive = true
+                    }
+                }
+                },
                 text = "Пропустить",
                 fontSize = 20.sp,
                 color = Color(0xFF57A9FF),
-                modifier = Modifier.padding(top = 25.dp, start = 20.dp)
+
             )
             Icon(
                 painter = painterResource(id = R.drawable.shape),
@@ -102,3 +115,6 @@ fun InformationScreen1() {
         }
     }
 }
+
+
+
