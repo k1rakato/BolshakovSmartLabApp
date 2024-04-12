@@ -1,5 +1,6 @@
 package com.example.bolshakovmobile.viewModel
 
+<<<<<<< HEAD
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,18 @@ import kotlinx.coroutines.launch
 class ViewModelMain (private val repository: Repository, private val validateEmail: ValidateEmail = ValidateEmail(),
                      private val validateTerms: ValidateTerms = ValidateTerms() ): ViewModel(){
 
+=======
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bolshakovmobile.API.Repository
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+
+class ViewModelMain (private val repository: Repository): ViewModel(){
+>>>>>>> origin/master
     private val _showErrorToastChannel = Channel<Boolean>()
     val showErrorToastChannel = _showErrorToastChannel.receiveAsFlow()
 
@@ -32,6 +45,7 @@ class ViewModelMain (private val repository: Repository, private val validateEma
       }
   }
 
+<<<<<<< HEAD
     var state by mutableStateOf(RegistrationFormState())
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvent = validationEventChannel.receiveAsFlow()
@@ -74,4 +88,6 @@ class ViewModelMain (private val repository: Repository, private val validateEma
     }
 
 
+=======
+>>>>>>> origin/master
 }

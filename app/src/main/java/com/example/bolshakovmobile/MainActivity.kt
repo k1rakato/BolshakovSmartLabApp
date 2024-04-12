@@ -21,7 +21,12 @@ import com.example.bolshakovmobile.screens.regScreen
 import com.example.bolshakovmobile.ui.theme.BolshakovMobileTheme
 import com.example.bolshakovmobile.viewModel.ViewModelMain
 
-class MainActivity : ComponentActivity() {
+
+
+
+
+
+    class MainActivity : ComponentActivity() {
         private val viewModelSmart by viewModels<ViewModelMain>(factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
