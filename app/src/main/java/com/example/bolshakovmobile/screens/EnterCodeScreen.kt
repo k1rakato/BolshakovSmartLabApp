@@ -74,12 +74,11 @@ fun CodeScreen(navController: NavHostController) { //
                 border = BorderStroke(2.dp, color = Color.LightGray),
                 shape = RoundedCornerShape(10.dp),
                 contentPadding = PaddingValues(1.dp)
-
             ) {
                 Icon(imageVector = Icons.Filled.KeyboardArrowLeft,
                     contentDescription = "Назад",
                     tint = Color.Black,
-                    modifier = Modifier.size(20.dp)) }
+                    modifier = Modifier.size(20.dp))
             }
         }
         Column(
@@ -185,4 +184,6 @@ fun CodeScreen(navController: NavHostController) { //
                 color = Color(0xFF939396)
             )
         }
+
     }
+}
