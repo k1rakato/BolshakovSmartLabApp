@@ -1,6 +1,7 @@
 package com.example.bolshakovmobile.screens
 
 
+import android.util.Patterns
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -80,34 +82,58 @@ fun regScreen(navController: NavHostController, viewModel: ViewModelMain) {
             ),
             placeholder = { Text("example@mail.ru") }
         )
+        if (Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
+            Button(
+                onClick = {
+                    navController.navigate("EnterCodeScreen")
+                    viewModel.sendCodeEmail(email.value)
+                },
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 40.dp)
+                    .height(60.dp),
+                enabled = email.value.isNotEmpty(),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1A6FEE),
+                    disabledContentColor = Color(0xFFC9D4FB)
+                ),
+            ) {
+                Text(
+                    text = "Далее",
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+            }
+        }
+        else{
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 40.dp)
+                    .height(60.dp),
+                enabled = email.value.isNotEmpty(),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1A6FEE),
+                    disabledContentColor = Color(0xFFC9D4FB)
+                ),
+            ) {
+                Text(
+                    text = "Далее",
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
 
-        Button(
-            onClick = {
-                navController.navigate("EnterCodeScreen")
-                viewModel.sendCodeEmail(email.value)},
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .padding(top = 40.dp)
-                .height(60.dp),
-            enabled = email.value.isNotEmpty(),
-            shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF1A6FEE),
-                disabledContentColor = Color(0xFFC9D4FB)
-            ),
-        ) {
-            Text(
-                text = "Далее",
-                fontSize = 20.sp,
-                color = Color.White
-            )
+            }
 
         }
         Text(
             text = "Или войдите с помощью",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 180.dp, bottom = 20.dp),
+                .padding(top = 200.dp, bottom = 20.dp),
             textAlign = TextAlign.Center,
             fontSize = 15.sp,
             color = Color(0xFF939396)
@@ -117,7 +143,7 @@ fun regScreen(navController: NavHostController, viewModel: ViewModelMain) {
             modifier = Modifier
                 .fillMaxWidth(1f)
                 .fillMaxHeight()
-                .padding(bottom = 75.dp),
+                .padding(bottom = 80.dp),
             shape = RoundedCornerShape(15.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFFFFFFF),

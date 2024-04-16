@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -69,13 +72,14 @@ fun CodeScreen(navController: NavHostController) { //
                     disabledContentColor = Color(0xFFC9D4FB)
                 ),
                 border = BorderStroke(2.dp, color = Color.LightGray),
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                contentPadding = PaddingValues(1.dp)
+
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icons),
-                    contentDescription = "",
-                    tint = Color.Unspecified
-                    )
+                Icon(imageVector = Icons.Filled.KeyboardArrowLeft,
+                    contentDescription = "Назад",
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)) }
             }
         }
         Column(
@@ -181,6 +185,4 @@ fun CodeScreen(navController: NavHostController) { //
                 color = Color(0xFF939396)
             )
         }
-
     }
-}
